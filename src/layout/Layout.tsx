@@ -9,6 +9,7 @@ const Base = styled.div`
   min-width: 420px;
   min-height: 320px;
 `
+
 interface LayoutContextValue {
   title: string | null
   setTitle: (title: string | null) => void

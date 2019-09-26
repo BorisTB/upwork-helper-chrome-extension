@@ -1,22 +1,35 @@
 import Parser from 'rss-parser'
+import { storage } from 'utils/storage'
 
 const parser = new Parser()
 
-const fetchFeed = async () =>
-  parser.parseURL(
-    'https://www.upwork.com/ab/feed/topics/atom?securityToken=a564b2a3897bccbea15aa9c9000a0d2f05b128819fb622608765e27819e459122aa6cad0ed0c79713de9d5ef0537eefbbdf7f299d32693c7415a3d67038cc537&userUid=585384849758691328&orgUid=585384849758691330&topic=4411892'
-  )
-
-const init = async () => {
+const fetchFeed = async (feedUrl: string, cb: (feed: object) => void) => {
   try {
-    const feed = await fetchFeed()
+    const feed = await parser.parseURL(feedUrl)
 
-    if (feed) {
-      console.log({ feed })
-    }
+    cb(feed)
   } catch (e) {
-    console.error(e)
+    console.log(e)
   }
 }
 
-init().catch((e) => console.log(e))
+
+const init = () => {
+  chrome.runtime.onConnect.addListener(port => {
+    if (port.name === 'feed') {
+      port.onMessage.addListener(async (message) => {
+        try {
+          const feedUrls = await storage.feedUrls.get()
+
+          feedUrls.forEach((feedUrl: string) => fetchFeed(feedUrl, (feed: object) => {
+            port.postMessage({ feed })
+          }))
+        } catch (e) {
+          console.error(e)
+        }
+      })
+    }
+  })
+}
+
+init()

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { TextField } from 'components'
+import { useItemStorage } from 'hooks'
 
 const Layout = styled.div`
   display: flex;
@@ -8,10 +9,42 @@ const Layout = styled.div`
   padding: 14px;
 `
 
-const Settings: React.FC = () => (
-  <Layout>
-    <TextField placeholder='RSS / Atom url' label='RSS/Atom url' />
-  </Layout>
-)
+const Field = styled.div`
+  & + & {
+    margin-top: 8px;
+  }
+`
+
+const Settings: React.FC = () => {
+  const [loading, feedUrls, setFeedUrls, saveFeedUrls] = useItemStorage('feedUrls', [])
+  const setUrlByIndex = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+
+    setFeedUrls((prevState: string[]) => {
+      const newState = [...prevState]
+      newState[index] = value
+      return newState
+    })
+  }
+
+  return (
+    <Layout>
+      {
+        [...feedUrls, ''].map((value: string, index: number) =>
+          <Field key={index}>
+            <TextField
+              fullWidth
+              placeholder='https://www.upwork.com/ab/feed...'
+              disabled={loading}
+              value={value}
+              onChange={setUrlByIndex(index)}
+              onBlur={() => saveFeedUrls()}
+            />
+          </Field>
+        )
+      }
+    </Layout>
+  )
+}
 
 export { Settings }

@@ -14,8 +14,6 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
-  border: 2px solid #e0e0e0;
   border-top: none;
   border-bottom: none;
 `
@@ -24,7 +22,7 @@ const Link = styled(RouterLink)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  flex: 1;
   font-size: 1.5rem;
 
   &:hover,

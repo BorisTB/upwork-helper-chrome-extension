@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-const Input = styled.input`
+export interface TextFieldProps extends React.HTMLProps<HTMLInputElement> {
+  fullWidth?: boolean
+}
+
+const Input = styled(({ fullWidth, ...props }) => <input {...props} />)`
+  ${({ fullWidth }) => fullWidth ? 'width: 100%' : ''};
   min-height: 40px;
   height: 40px;
   padding: 10px 19px;
@@ -22,7 +27,7 @@ const Input = styled.input`
   }
 `
 
-const TextField: React.FC<React.HTMLProps<HTMLInputElement>> = (props) => (
+const TextField: React.FC<TextFieldProps> = (props) => (
   <Input {...props} />
 )
 

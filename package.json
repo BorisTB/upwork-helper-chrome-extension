@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.89",
     "prettier": "^1.18.2",
     "prettier-tslint": "^0.4.2",
     "tslint": "^5.20.0",
