@@ -8,6 +8,7 @@ const Base = styled.div`
   flex-direction: column;
   min-width: 420px;
   min-height: 320px;
+  height: 100%;
 `
 
 interface LayoutContextValue {
@@ -32,6 +33,12 @@ const Layout: React.FC = ({ children }) => {
           styles={{
             '*': {
               boxSizing: 'border-box'
+            },
+            'html, body': {
+              height: '100%'
+            },
+            '#root': {
+              height: '100%'
             }
           }}
         />

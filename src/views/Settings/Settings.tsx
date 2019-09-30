@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { TextField } from 'components'
 import { useItemStorage } from 'hooks'

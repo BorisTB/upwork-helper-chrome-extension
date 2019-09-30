@@ -32,7 +32,7 @@ const useItemStorage = (itemStorageKey: keyof typeof storage, defaultValue: any 
   }
 
   useEffect(() => {
-    loadItems().catch(e => console.error(e))
+    loadItems().catch((e) => console.error(e))
   }, [])
 
   return [loading, items, setItems, saveItems]

@@ -7,7 +7,6 @@ import { useLayout } from '../Layout'
 const Nav = styled.nav`
   display: flex;
   height: 42px;
-  border-bottom: 2px solid #e0e0e0;
 `
 
 const Title = styled.div`
@@ -24,11 +23,14 @@ const Link = styled(RouterLink)`
   justify-content: center;
   flex: 1;
   font-size: 1.5rem;
+  border-bottom: 1px solid;
+  border-color: #e0e0e0;
 
   &:hover,
   &.active {
     color: white;
     background: #37a000;
+    border-color: #37a000;
   }
 `
 
