@@ -23,7 +23,7 @@ const Settings: React.FC = () => {
     setFeedUrls((prevState: string[]) => {
       const newState = [...prevState]
       newState[index] = value
-      return newState
+      return newState.filter(val => !!val)
     })
   }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { useFeeds } from 'hooks/useFeeds'
 import { JobListNavItem } from './JobListNavItem'
+import { JobListItemPreview } from './JobListItemPreview'
 
 const JobListNav = styled.div`
   display: flex;
@@ -20,33 +21,29 @@ const JobListContent = styled.div`
 `
 
 const JobList: React.FC = () => {
-  const [feeds] = useFeeds()
-  console.log({ feeds })
+  const [feeds, selectedFeed, setSelectedFeed] = useFeeds()
 
-  return (
+  return feeds ? (
     <>
       <JobListNav>
         {
           feeds.map(feed => (
-            <JobListNavItem key={feed.id} badge={feed.unread}>
+            <JobListNavItem key={feed.id} badge={feed.unread} selected={!!(selectedFeed && selectedFeed.id === feed.id)} onClick={() => { setSelectedFeed(feed) }}>
               {feed.title}
             </JobListNavItem>
           ))
         }
       </JobListNav>
 
-      <JobListContent>
-        {
-          feeds[0] && feeds[0].items.map(item => (
-            <div key={item.id}>
-              <div>{item.data.title}</div>
-              <div>{item.data.contentSnippet}</div>
-            </div>
-          ))
-        }
-      </JobListContent>
+      { selectedFeed && (
+        <JobListContent>
+          {
+            selectedFeed.items.map(item => <JobListItemPreview key={item.id} item={item} />)
+          }
+        </JobListContent>
+      )}
     </>
-  )
+  ) : null
 }
 
 export { JobList }

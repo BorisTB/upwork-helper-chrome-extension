@@ -2,6 +2,8 @@ import { Item } from 'rss-parser'
 
 export interface FeedItemSerialized {
   id: string
+  title: string
+  preview: string
   read: boolean
   data: Item
 }
@@ -27,6 +29,16 @@ export class FeedItem {
     this.data = { ...data }
   }
 
+  public getTitle () {
+    return this.getData().title || ''
+  }
+
+  public getPreview () {
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = this.getData().content || ''
+    return (tempDiv.textContent || tempDiv.innerText || '').replace(/&quot;/g, '\\"').substring(0, 300) + '...'
+  }
+
   public isUnread () {
     return !this.read
   }
@@ -38,6 +50,8 @@ export class FeedItem {
   public serialize (): FeedItemSerialized {
     return {
       id: this.getId(),
+      title: this.getTitle(),
+      preview: this.getPreview(),
       read: !this.isUnread(),
       data: this.getData()
     }
@@ -99,7 +113,7 @@ export class FeedStore {
     this.feedSources.clear()
   }
 
-  public getSerializedFeeds () {
+  public getSerializedFeeds (): FeedSourceSerialized[] {
     const feedSources = Array.from(this.feedSources.values())
     const serialized = feedSources.map((feedSource) => feedSource.serialize())
     return serialized

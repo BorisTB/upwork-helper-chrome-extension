@@ -27,7 +27,7 @@ const processFetchedFeeds = async (feeds: Parser.Output[], feedUrls: string[]) =
 
       for (let feedItemIndex = 0; feedItemIndex < feedItems.length; feedItemIndex++) {
         const feedItemData = feedItems[feedItemIndex]
-        const feedItemId = feedItemData.id
+        const feedItemId = feedItemData.id || feedItemData.guid
 
         const feedItem = feedStore.getOrCreateFeedItem(feedItemId)
         feedItem.setData(feedItemData)
@@ -67,6 +67,8 @@ const resetFetchInterval = () => {
 }
 
 const init = () => {
+  document.cookie = 'tagname = test;secure'
+
   fetchUrls()
   resetFetchInterval()
 

@@ -1,12 +1,27 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+
+const activeStyles = css`
+  color: white;
+  background: #37a000;
+  
+  span {
+    &::after {
+      color: #37a000;
+      background: white;
+    }
+  }
+`
 
 interface JobListNavItemProps {
   children?: React.ReactNode
   badge: number | string
+  selected?: boolean
+  onClick?: () => void
 }
 
-const Item = styled.button`
+const Item = styled.button<JobListNavItemProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,18 +34,11 @@ const Item = styled.button`
   border: none;
   cursor: pointer;
 
-  &:hover,
-  &.active {
-    color: white;
-    background: #37a000;
-    
-    span {
-      &::after {
-        color: #37a000;
-        background: white;
-      }
-    }
+  &:hover {
+    ${activeStyles};
   }
+  
+  ${({ selected }) => selected ? activeStyles : ''};
   
   &:focus {
     outline: 0;
@@ -56,7 +64,7 @@ const Item = styled.button`
 `
 
 const JobListNavItem: React.FC<JobListNavItemProps> = ({ badge, children, ...props }) => (
-  <Item {...props}>
+  <Item badge={badge} {...props}>
     <span data-badge={badge}>{children}</span>
   </Item>
 )
