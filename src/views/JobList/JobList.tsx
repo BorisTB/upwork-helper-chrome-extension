@@ -3,13 +3,6 @@ import styled from '@emotion/styled'
 import { useFeeds } from 'hooks/useFeeds'
 import { JobListNavItem } from './JobListNavItem'
 
-const JobListLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-`
-
 const JobListNav = styled.div`
   display: flex;
   width: 100%;
@@ -31,7 +24,7 @@ const JobList: React.FC = () => {
   console.log({ feeds })
 
   return (
-    <JobListLayout>
+    <>
       <JobListNav>
         {
           feeds.map(feed => (
@@ -52,7 +45,7 @@ const JobList: React.FC = () => {
           ))
         }
       </JobListContent>
-    </JobListLayout>
+    </>
   )
 }
 

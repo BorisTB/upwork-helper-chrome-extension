@@ -11,6 +11,13 @@ const Base = styled.div`
   height: 100%;
 `
 
+const Content = styled.main`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+`
+
 interface LayoutContextValue {
   title: string | null
   setTitle: (title: string | null) => void
@@ -44,7 +51,9 @@ const Layout: React.FC = ({ children }) => {
         />
 
         <Navigation />
-        {children}
+        <Content>
+          {children}
+        </Content>
       </Base>
     </LayoutContext.Provider>
   )

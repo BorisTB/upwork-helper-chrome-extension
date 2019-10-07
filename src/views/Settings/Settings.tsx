@@ -34,7 +34,7 @@ const Settings: React.FC = () => {
           <Field key={index}>
             <TextField
               fullWidth
-              placeholder='https://www.upwork.com/ab/feed...'
+              placeholder='RSS / Atom url'
               disabled={loading}
               value={value}
               onChange={setUrlByIndex(index)}
